@@ -1,4 +1,4 @@
-'''
+"""
 # Test libraries' versions:
 # Cambio
 import sys
@@ -18,8 +18,11 @@ print('pandas: {}'.format(pandas.__version__))
 # scikit-learn
 import sklearn
 print('sklearn: {}'.format(sklearn.__version__))
-'''
-
+"""
+#Para omitir mensajes de advertencia
+import warnings
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
+warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
 # Cargo Librerias
 import pandas
@@ -37,9 +40,16 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
 # Load dataset
-url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+"""
+#Desde Web
+# url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 dataset = pandas.read_csv(url, names=names)
+"""
+#Desde archivo local
+filename = 'iris.data.csv'
+names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
+dataset = pandas.read_csv(filename, names=names)
 
 """
 Formas de cargar datasets
@@ -52,17 +62,12 @@ reader = csv.reader(raw_data, delimiter=',', quoting=csv.QUOTE_NONE)
 x = list(reader)
 data = numpy.array(x).astype('float')
 print(data.shape)
-
-
-
 # Load CSV with Numpy
 import numpy
 filename = 'pima-indians-diabetes.data.csv'
 raw_data = open(filename, 'rt')
 data = numpy.loadtxt(raw_data, delimiter=",")
 print(data.shape)
-
-
 # Load CSV from URL using NumPy
 from numpy import loadtxt
 from urllib.request import urlopen
@@ -70,31 +75,33 @@ url = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-
 raw_data = urlopen(url)
 dataset = loadtxt(raw_data, delimiter=",")
 print(dataset.shape)
-
 # Load CSV using Pandas
 import pandas
 filename = 'pima-indians-diabetes.data.csv'
 names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
 data = pandas.read_csv(filename, names=names)
 print(data.shape)
-
-
 # Load CSV using Pandas from URL
 import pandas
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
 names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
 data = pandas.read_csv(url, names=names)
 print(data.shape)
-
 """
 
 # Dimensiones del DataSet
-# shape-Tamano
+# shape-Tamano (filas,columnas)
 print(dataset.shape)
+#Imprime nombre de las columnas
+print (dataset.columns)
+#Imprime informacion general del dataframe
+print (dataset.info())
 # Primeros 20 registros del dataset
 print(dataset.head(20))
 # Resumen estadistico del dataset
 print(dataset.describe())
+
+
 # Distribucion por clases
 print(dataset.groupby('class').size())
 
